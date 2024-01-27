@@ -6,11 +6,17 @@ It will perform a search every x time or by request.
 
 Made with Python and [Abstra](https://github.com/abstra-app/abstra-lib).
 
+#### Disclaimers
+
+> ⚠️ This is a personal project, I'm not affiliated with Zap Imóveis in any way.
+
+> ⚠️ Use at your own risk, querying Zap Imóveis APIs directly may be against their terms of use.
+
 ## Usage
 
 ### Getting the query
 
-_still working on a better way to do this, but it's only done once_
+> _still working on a better way to do this, but it's only done once_
 
 - Make your search on Zap Imóveis
 - Open developer tab and search for `glue` on the network tab
