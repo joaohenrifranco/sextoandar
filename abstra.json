@@ -1,0 +1,105 @@
+{
+  "workspace": {
+    "id": null,
+    "name": "Untitled Workspace",
+    "theme": null,
+    "logo_url": null,
+    "brand_name": null,
+    "main_color": null,
+    "font_color": null,
+    "font_family": null,
+    "sidebar": [
+      {
+        "id": "setup-tg-webhook",
+        "name": "Setup TG Webhook",
+        "path": "setup-tg-webhook",
+        "type": "form",
+        "visible": false
+      }
+    ]
+  },
+  "visualization": [],
+  "jobs": [
+    {
+      "id": "ou01s3t",
+      "file": "job.py",
+      "title": "every x time",
+      "schedule": "0 10 * * *",
+      "workflow_position": [
+        -592.4978055931151,
+        37.42187535962711
+      ],
+      "transitions": [
+        {
+          "target_id": "d32a333d-c283-47d5-9880-46bbcd6266e3",
+          "target_type": "scripts",
+          "type": "jobs:finished",
+          "id": "kctn570",
+          "condition_value": null
+        }
+      ]
+    }
+  ],
+  "hooks": [
+    {
+      "id": "2c4de0f8-2679-4780-a829-0dc79caf636f",
+      "file": "receive_message.py",
+      "path": "receive-message",
+      "title": "tg_message_received",
+      "enabled": false,
+      "workflow_position": [
+        -572.5506479261185,
+        -185.8916432817121
+      ],
+      "is_initial": true,
+      "transitions": [
+        {
+          "target_id": "d32a333d-c283-47d5-9880-46bbcd6266e3",
+          "target_type": "scripts",
+          "type": "hooks:finished",
+          "id": "icwwxie",
+          "condition_value": null
+        }
+      ]
+    }
+  ],
+  "forms": [
+    {
+      "id": "0idywhl",
+      "path": "setup-tg-webhook",
+      "title": "Setup TG Webhook",
+      "is_initial": true,
+      "auto_start": false,
+      "allow_restart": false,
+      "end_message": null,
+      "start_message": null,
+      "error_message": null,
+      "welcome_title": null,
+      "timeout_message": null,
+      "start_button_text": null,
+      "restart_button_text": null,
+      "file": "form_bot_admin.py",
+      "workflow_position": [
+        -301.52873571644545,
+        -368.8962460439501
+      ],
+      "transitions": []
+    }
+  ],
+  "scripts": [
+    {
+      "id": "d32a333d-c283-47d5-9880-46bbcd6266e3",
+      "file": "fetch_new_listings.py",
+      "title": "update_and_send_listings",
+      "is_initial": false,
+      "workflow_position": [
+        -87.04974077773704,
+        -95.26645296386062
+      ],
+      "transitions": []
+    }
+  ],
+  "iterators": [],
+  "conditions": [],
+  "version": "3.0"
+}
