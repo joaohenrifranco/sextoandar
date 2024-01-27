@@ -3,7 +3,6 @@ from env import TG_BOT_TOKEN, TG_WEBHOOK_TOKEN, TG_OWNER_CHAT_ID
 from typing import Any
 
 
-
 class TelegramBot:
     def __init__(self, chat_id: Any = TG_OWNER_CHAT_ID):
         self.chat_id = chat_id or TG_OWNER_CHAT_ID

@@ -6,7 +6,7 @@ from telegram import TelegramBot
 
 body, query, headers = ah.get_request()
 
-chat_id = str(body["message"]["chat"]["id"]) # type: ignore
+chat_id = str(body["message"]["chat"]["id"])  # type: ignore
 bot = TelegramBot(chat_id)
 
 aw.set_data("chat_id", chat_id)
@@ -27,7 +27,6 @@ print("Headers", headers)
 if chat_id != TG_OWNER_CHAT_ID:
     bot.send_message("não posso falar com você")
     raise Exception("Unauthorized")
-
 
 
 ah.send_response("success", 200, {"Content-Type": "text/plain"})

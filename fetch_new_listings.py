@@ -29,17 +29,22 @@ def run_scraping() -> List[str]:
         print(f"Found listing {listing_result.listing.id}")
 
         try:
-            at.insert("listings_urls", {
-                "zap_id": listing_result.listing.id,
-                "url": f"http://www.zapimoveis.com.br/imovel/aluguel/{listing_result.listing.id}/",
-            })
+            at.insert(
+                "listings_urls",
+                {
+                    "zap_id": listing_result.listing.id,
+                    "url": f"http://www.zapimoveis.com.br/imovel/aluguel/{listing_result.listing.id}/",
+                },
+            )
         except Exception as e:
             print("Error inserting listing:")
             print(e)
             continue
 
-        urls.append(f"http://www.zapimoveis.com.br/imovel/aluguel/{listing_result.listing.id}/")
-    
+        urls.append(
+            f"http://www.zapimoveis.com.br/imovel/aluguel/{listing_result.listing.id}/"
+        )
+
     return urls
 
 
@@ -54,7 +59,7 @@ else:
 
     for index, url in enumerate(urls):
         bot.send_message(url)
-        
+
         # rate limit
         if index % 10 == 0:
             sleep(10)

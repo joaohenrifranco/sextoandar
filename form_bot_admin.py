@@ -17,10 +17,17 @@ TG_WEBHOOK_TOKEN = os.environ.get("TG_WEBHOOK_TOKEN")
 if not TG_BOT_TOKEN or not TG_WEBHOOK_TOKEN:
     raise ValueError("TG_BOT_TOKEN or TG_WEBHOOK_TOKEN are not set")
 
-page_res = af.Page().read("URL").display_markdown(f""""
+page_res = (
+    af.Page()
+    .read("URL")
+    .display_markdown(
+        f""""
 - TG_BOT_TOKEN: {TG_BOT_TOKEN}
 - TG_WEBHOOK_TOKEN: {TG_WEBHOOK_TOKEN}
-""").run()
+"""
+    )
+    .run()
+)
 
 bot.setup_webhook(f"{page_res['URL']}")
 
