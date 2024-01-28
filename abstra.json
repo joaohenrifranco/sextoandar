@@ -24,7 +24,7 @@
       "id": "ou01s3t",
       "file": "job.py",
       "title": "every x time",
-      "schedule": "0 10 * * *",
+      "schedule": "0 * * * *",
       "workflow_position": [
         -592.4978055931151,
         37.42187535962711

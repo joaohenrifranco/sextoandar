@@ -31,4 +31,4 @@ page_res = (
 
 bot.setup_webhook(f"{page_res['URL']}")
 
-bot.send_message("Bot configurado com sucesso!")
+bot.send_message("bot reconfigurado com sucesso!")
