@@ -1,4 +1,4 @@
-# Alugabot
+# SextoAndar
 
 Telegram bot to notify about new listings for a given search on Zap Imóveis.
 
