@@ -61,6 +61,10 @@ class ZapAPI:
         print(f"[ZAP_API] {message}")
 
     def _fetch_items_page(self, page_size: int = 50, page: int = 1) -> SearchResponse:
+        _from = page_size * page
+
+        print(f"Fetching page {page} ({_from} to {_from + page_size})")
+
         url = "https://glue-api.zapimoveis.com.br/v2/listings"
         params = {
             "user": "3244c121-b5c9-4b8e-bf4c-030889184e54",
@@ -93,7 +97,7 @@ class ZapAPI:
             "usageTypes": "RESIDENTIAL,RESIDENTIAL,RESIDENTIAL,RESIDENTIAL,RESIDENTIAL,RESIDENTIAL,RESIDENTIAL,RESIDENTIAL,RESIDENTIAL,RESIDENTIAL,RESIDENTIAL,RESIDENTIAL",
             "page": str(page),
             "size": str(page_size),
-            "from": str(page_size * page),
+            "from": str(_from),
             "levels": "NEIGHBORHOOD",
             "ref": "",
         }
@@ -131,19 +135,20 @@ class ZapAPI:
         return parsed
 
     def fetch_listings(self) -> List[ListingResult]:
-        page_size = 100
+        PAGE_SIZE = 100
         page = 0
-        response = self._fetch_items_page(page_size, page)
+        response = self._fetch_items_page(PAGE_SIZE, page)
         total_count = response.search.totalCount
         self.log(f"Fetching {total_count} listings...")
         fetched_listings = response.search.result.listings
 
-        while len(fetched_listings) < total_count:
+        while page * PAGE_SIZE < total_count:
             page += 1
-            response = self._fetch_items_page(page_size, page)
+            response = self._fetch_items_page(PAGE_SIZE, page)
             fetched_listings += response.search.result.listings
+
             self.log(
-                f"Fetched {len(fetched_listings)}/{response.search.totalCount} listings (Page {page}/{total_count // page_size})"
+                f"Fetched {len(fetched_listings)}/{response.search.totalCount} listings (Page {page}/{total_count // PAGE_SIZE})"
             )
 
         return fetched_listings
