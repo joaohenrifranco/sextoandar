@@ -83,7 +83,11 @@
         -301.52873571644545,
         -368.8962460439501
       ],
-      "transitions": []
+      "transitions": [],
+      "notification_trigger": {
+        "variable_name": "assignee_emails",
+        "enabled": false
+      }
     }
   ],
   "scripts": [
@@ -101,5 +105,5 @@
   ],
   "iterators": [],
   "conditions": [],
-  "version": "3.0"
+  "version": "4.0"
 }
