@@ -1,6 +1,7 @@
-import abstra.forms as af
-import requests
 import os
+
+import abstra.forms as af
+
 from env import ADMIN_EMAIL
 from telegram import TelegramBot
 

@@ -1,4 +1,3 @@
-from time import sleep
 from typing import List
 
 import abstra.tables as at
@@ -29,7 +28,7 @@ def run_scraping() -> None:
         if listing_result.listing.id in [l["zap_id"] for l in old_listings]:
             continue
         
-        url = f"http://www.zapimoveis.com.br/imovel/aluguel/{listing_result.listing.id}/"
+        url = zap.make_listing_url(listing_result.listing)
 
         print(f"New listing found: {listing_result.listing.id}")
         bot.send_message(f"se liga nesse {url}")

@@ -56,6 +56,9 @@ class Media:
     url: str
 
 
+MIN_PRICE = 2000
+MAX_PRICE = 4500
+
 class ZapAPI:
     def log(self, message: str) -> None:
         print(f"[ZAP_API] {message}")
@@ -80,9 +83,8 @@ class ZapAPI:
             "parentId": "null",
             "listingType": "USED",
             "usableAreasMin": "35",
-            "rentalTotalPriceMin": "2000",
-            "rentalTotalPriceMax": "4500",
-            "rentTotalPrice": "true",
+            "rentalTotalPriceMin": {str(MIN_PRICE)},
+            "rentalTotalPriceMax": {str(MAX_PRICE)},
             "addressCity": "Rio de Janeiro,Rio de Janeiro,Rio de Janeiro,Ipanema,Rio de Janeiro,Rio de Janeiro,Rio de Janeiro,Rio de Janeiro,Rio de Janeiro",
             "addressZone": "Zona Sul,Zona Sul,Zona Sul,,Zona Sul,Zona Sul,Zona Sul,Zona Sul,Zona Sul",
             "addressLocationId": "BR>Rio de Janeiro>NULL>Rio de Janeiro>Zona Sul>Botafogo,BR>Rio de Janeiro>NULL>Rio de Janeiro>Zona Sul>Leme,BR>Rio de Janeiro>NULL>Rio de Janeiro>Zona Sul>Copacabana,BR>Minas Gerais>NULL>Ipanema,BR>Rio de Janeiro>NULL>Rio de Janeiro>Zona Sul>Leblon,BR>Rio de Janeiro>NULL>Rio de Janeiro>Zona Sul>Flamengo,BR>Rio de Janeiro>NULL>Rio de Janeiro>Zona Sul>Lagoa,BR>Rio de Janeiro>NULL>Rio de Janeiro>Zona Sul>Jardim Botanico,BR>Rio de Janeiro>NULL>Rio de Janeiro>Zona Sul>Humaita",
@@ -133,7 +135,20 @@ class ZapAPI:
             raise e
 
         return parsed
+    
+    def _filter_listings(self, listing_results: List[ListingResult]) -> List[ListingResult]:
+        filtered = []
+        for l in listing_results:
+            for pricingInfo in l.listing.pricingInfos:
+                if pricingInfo.rentalInfo is None or pricingInfo.rentalInfo.monthlyRentalTotalPrice is None:
+                    continue
+                if (pricingInfo.rentalInfo.monthlyRentalTotalPrice >= MIN_PRICE
+                    and pricingInfo.rentalInfo.monthlyRentalTotalPrice <= MAX_PRICE):
+                    filtered.append(l)
 
+        print(f"Filtered {len(filtered)}/{len(listing_results)} listings")
+        return filtered
+    
     def fetch_listings(self) -> List[ListingResult]:
         PAGE_SIZE = 100
         page = 0
@@ -150,5 +165,18 @@ class ZapAPI:
             self.log(
                 f"Fetched {len(fetched_listings)}/{response.search.totalCount} listings (Page {page}/{total_count // PAGE_SIZE})"
             )
+            
+        fetched_listings = self._filter_listings(fetched_listings)
 
         return fetched_listings
+    
+    def make_listing_url(self, listing: Listing) -> str:
+        return f"http://www.zapimoveis.com.br/imovel/aluguel/{listing.id}/"
+    
+if __name__ == "__main__":
+    zap = ZapAPI()
+    listings = zap.fetch_listings()
+    print(len(listings))
+
+    for i in range(5):
+        print(zap.make_listing_url(listings[i].listing))
