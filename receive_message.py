@@ -6,7 +6,12 @@ from telegram import TelegramBot
 
 body, query, headers = ah.get_request()
 
-chat_id = str(body["message"]["chat"]["id"])  # type: ignore
+if "message" in body:
+    chat_id = str(body["message"]["chat"]["id"])  # type: ignore
+else:
+    ah.send_response("success", 200, {"Content-Type": "text/plain"})
+    exit(0)
+
 bot = TelegramBot(chat_id)
 
 aw.set_data("chat_id", chat_id)
